@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Серверная часть проекта 'Mesto', разработанная на express.js",
   "main": "nodemon app.js",
   "scripts": {
     "start": "node app.js",
@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alex Log alexvoy.voy@yandex.ru https://github.com/AlexLogLog",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
@@ -21,6 +21,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react": "^7.22.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "typescript": "^4.1.5"
   }
 }
