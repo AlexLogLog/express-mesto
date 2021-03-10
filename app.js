@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const users = require('./routes/users.js');
@@ -26,8 +25,6 @@ app.use((req, res, next) => {
 
   next();
 });
-
-app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(users);
 app.use(cards);
