@@ -1,7 +1,15 @@
 
 {
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
   "extends": "airbnb-base",
   "rules": {
+    "import/extensions": "off",
     "no-console": "off",
     "no-underscore-dangle": [
       "error",
