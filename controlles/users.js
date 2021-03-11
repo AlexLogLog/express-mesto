@@ -14,7 +14,13 @@ module.exports.getUserId = (req, res) => {
       }
       return res.status(200).send(user);
     })
-    .catch((error) => res.status(500).send({ message: error.message }));
+    .catch((error) => {
+      if (error.name === 'CastError') {
+        res.status(400).send({ message: error.message });
+      } else {
+        res.status(500).send({ message: error.message });
+      }
+    });
 };
 
 module.exports.newUser = (req, res) => {
@@ -33,7 +39,12 @@ module.exports.newUser = (req, res) => {
 module.exports.patchUserInfo = (req, res) => {
   const { name, about } = req.body;
   UserSchema.findOneAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
-    .then((user) => res.status(200).send(user))
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({ message: 'Нет пользователя с таким id' });
+      }
+      return res.status(200).send(user);
+    })
     .catch((error) => {
       if (error.name === 'ValidationError') {
         res.status(400).send({ message: error.message });
@@ -48,7 +59,12 @@ module.exports.patchUserInfo = (req, res) => {
 module.exports.patchUserAvatar = (req, res) => {
   const { avatar } = req.body;
   UserSchema.findOneAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
-    .then((user) => res.status(200).send(user))
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({ message: 'Нет пользователя с таким id' });
+      }
+      return res.status(200).send(user);
+    })
     .catch((error) => {
       if (error.name === 'ValidationError') {
         res.status(400).send({ message: error.message });

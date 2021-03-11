@@ -57,12 +57,17 @@ module.exports.newCard = (req, res) => {
 
 module.exports.getCardId = (req, res) => {
   CardSchema.findById(req.params.userId)
-    .then((card) => res.status(200).send(card))
     .then((card) => {
       if (!card) {
         return res.status(404).send({ message: 'Нет карточки с таким id' });
       }
       return res.status(200).send(card);
     })
-    .catch((error) => res.status(500).send({ message: error.message }));
+    .catch((error) => {
+      if (error.name === 'CastError') {
+        res.status(400).send({ message: error.message });
+      } else {
+        res.status(500).send({ message: error.message });
+      }
+    });
 };

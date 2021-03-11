@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const users = require('./routes/users.js');
 const cards = require('./routes/cards.js');
 
-const { PORT = 3000, BASE_PATH } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
@@ -33,6 +33,5 @@ app.all('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Ссылка на сервер:');
-  console.log(BASE_PATH);
+  console.log('Сервер запущен');
 });
