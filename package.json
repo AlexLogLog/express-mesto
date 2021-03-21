@@ -12,9 +12,15 @@
   "author": "Alex Log alexvoy.voy@yandex.ru https://github.com/AlexLogLog",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "celebrate": "^14.0.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.19"
+    "express-winston": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.19",
+    "validator": "^13.5.2",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.15.1",
@@ -23,5 +29,5 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "nodemon": "^2.0.7"
-    }
+  }
 }

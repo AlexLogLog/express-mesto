@@ -1,8 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { celebrate, Joi, CelebrateError } = require('celebrate');
+const BadRequestError = require('./errors/BadRequestError');
+const NotFoundError = require('./errors/NotFoundError');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const users = require('./routes/users.js');
 const cards = require('./routes/cards.js');
+const auth = require('./middlewares/auth');
+const {
+  newUser,
+  login,
+} = require('./controlles/users');
 
 const { PORT = 3000 } = process.env;
 
@@ -18,18 +27,44 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '6047d0512aad824d90ac8492',
-  };
+const userValidate = {
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(8),
+  }),
+};
 
-  next();
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
 });
 
-app.use(users);
-app.use(cards);
-app.all('*', (req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+app.use(requestLogger);
+
+app.post('/signin', celebrate(userValidate), login);
+app.post('/signup', celebrate(userValidate), newUser);
+app.use('/', auth, users);
+app.use('/', auth, cards);
+
+app.use(errorLogger);
+
+app.all('*', (req, res, next) => {
+  next(new NotFoundError('Запрашиваемый ресурс не найден'));
+});
+
+app.use((err, req, res, next) => {
+  let error = err;
+  if (error instanceof CelebrateError) error = new BadRequestError();
+  const { statusCode = 500, message } = error;
+  res
+    .status(statusCode)
+    .send({
+      message: statusCode === 500
+        ? 'На сервере произошла ошибка'
+        : message,
+    });
+  next();
 });
 
 app.listen(PORT, () => {
