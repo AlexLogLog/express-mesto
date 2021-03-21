@@ -27,7 +27,12 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+
+const corsOption = {
+  origin: '*',
+  allowedHeaders: '*',
+};
+app.use(cors(corsOption));
 
 // Массив разешённых доменов
 const allowedCors = [
