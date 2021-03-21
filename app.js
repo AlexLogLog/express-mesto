@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const allowedCors = [
   'https://domainname.students.nomoredomains.icu',
   'http://domainname.students.nomoredomains.icu',
-  'localhost:3000',
+  'http://localhost:3000',
 ];
 
 app.use((req, res, next) => {
