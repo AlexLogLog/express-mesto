@@ -21,7 +21,7 @@ const app = express();
 const options = {
   origin: [
     'http://localhost:8080',
-    'https://domainname.students.nomoredomains.icu/sign-up',
+    'https://domainname.students.nomoredomains.icu',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
