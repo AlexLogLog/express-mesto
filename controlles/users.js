@@ -5,14 +5,12 @@ const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
 module.exports.getUsers = (req, res, next) => {
-  res.set('Access-Control-Allow-Origin', '*');
   UserSchema.find({})
     .then((users) => res.status(200).send(users))
     .catch(next);
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  res.set('Access-Control-Allow-Origin', '*');
   const { _id: userId } = req.user;
   UserSchema.findById(userId)
     .orFail(new NotFoundError())
@@ -26,7 +24,6 @@ module.exports.getUserMe = (req, res, next) => {
 };
 
 module.exports.newUser = (req, res, next) => {
-  res.set('Access-Control-Allow-Origin', '*');
   const {
     name,
     about,
@@ -50,7 +47,6 @@ module.exports.newUser = (req, res, next) => {
 };
 
 module.exports.patchUserInfo = (req, res, next) => {
-  res.set('Access-Control-Allow-Origin', '*');
   const { name, about } = req.body;
   UserSchema.findOneAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .orFail(new NotFoundError())
@@ -64,7 +60,6 @@ module.exports.patchUserInfo = (req, res, next) => {
 };
 
 module.exports.patchUserAvatar = (req, res, next) => {
-  res.set('Access-Control-Allow-Origin', '*');
   const { avatar } = req.body;
   UserSchema.findOneAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .orFail(new NotFoundError())
@@ -78,7 +73,6 @@ module.exports.patchUserAvatar = (req, res, next) => {
 };
 
 module.exports.login = (req, res, next) => {
-  res.set('Access-Control-Allow-Origin', '*');
   const { email, password } = req.body;
   UserSchema.findUserByCredentials(email, password)
     .then((user) => {
