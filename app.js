@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { celebrate, Joi, CelebrateError } = require('celebrate');
-const cors = require('cors');
 const BadRequestError = require('./errors/BadRequestError');
 const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -27,12 +26,6 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-const corsOption = {
-  origin: '*',
-  allowedHeaders: '*',
-};
-app.use(cors(corsOption));
 
 // Массив разешённых доменов
 const allowedCors = [
