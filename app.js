@@ -42,23 +42,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Массив разешённых доменов
-const allowedCors = [
-  'https://domainname.students.nomoredomains.icu',
-  'http://domainname.students.nomoredomains.icu',
-  'http://localhost:3000',
-];
+// const allowedCors = [
+//   'https://domainname.students.nomoredomains.icu',
+//   'http://domainname.students.nomoredomains.icu',
+//   'http://localhost:3000',
+// ];
 
-app.use((req, res, next) => {
-  const { origin } = req.headers;
+// app.use((req, res, next) => {
+//   const { origin } = req.headers;
 
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+//   if (allowedCors.includes(origin)) {
+//     res.header('Access-Control-Allow-Origin', origin);
+//   }
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
 
-  next();
-});
+//   next();
+// });
 
 const userValidate = {
   body: Joi.object().keys({
