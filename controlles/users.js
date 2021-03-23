@@ -16,6 +16,7 @@ module.exports.getUserMe = (req, res, next) => {
   UserSchema.findById(userId)
     .orFail(new NotFoundError())
     .then((user) => {
+      console.log(user);
       if (!user) {
         return res.status(404).send({ message: 'Нет пользователя с таким id' });
       }
