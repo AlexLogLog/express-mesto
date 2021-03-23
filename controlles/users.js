@@ -12,7 +12,7 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  const { userId } = req._id;
+  const { _id: userId } = req.user;
   UserSchema.findById(userId)
     .orFail(new NotFoundError())
     .then((user) => {
