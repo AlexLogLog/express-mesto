@@ -12,8 +12,8 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  const { id } = req.user._id;
-  UserSchema.findById(id)
+  const { userId } = req._id;
+  UserSchema.findById(userId)
     .orFail(new NotFoundError())
     .then((user) => {
       if (!user) {
