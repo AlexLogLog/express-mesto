@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const UserSchema = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const ConflictError = require('../errors/ConflictError');
 
 module.exports.getUsers = (req, res, next) => {
   UserSchema.find({})
@@ -42,7 +43,11 @@ module.exports.newUser = (req, res, next) => {
         password: hash,
       })
         .then((user) => res.status(200).send(user))
-        .catch(next);
+        .catch((err) => {
+          if (err.name === 'MongoError' && err.code === 11000) {
+            next(new ConflictError('Пользователь с данным email уже есть'));
+          } else next(err);
+        });
     });
 };
 
