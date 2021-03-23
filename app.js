@@ -30,8 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const options = {
   origin: [
-    'http://localhost:8080',
-    'http://localhost:3000',
+    '*',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
