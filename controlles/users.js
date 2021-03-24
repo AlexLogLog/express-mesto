@@ -86,7 +86,7 @@ module.exports.login = (req, res, next) => {
         JWT_SECRET,
         { expiresIn: '7d' },
       );
-      res.send(token);
+      res.status(200).send({ token });
     })
     .catch(() => next(new UnauthorizedError('Неверный email или пароль')));
 };
