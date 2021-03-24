@@ -5,7 +5,8 @@ const NotFoundError = require('../errors/NotFoundError');
 
 module.exports.likeCard = (req, res, next) => {
   CardSchema.findByIdAndUpdate(req.params.cardId,
-    { $addToSet: { likes: req.user._id }, new: true, runValidators: true })
+    { $addToSet: { likes: req.user._id } },
+    { new: true, runValidators: true })
     .orFail(new NotFoundError('Карточка не найдена'))
     .then((card) => {
       res.status(200).send(card);
@@ -15,7 +16,8 @@ module.exports.likeCard = (req, res, next) => {
 
 module.exports.dislikeCard = (req, res, next) => {
   CardSchema.findByIdAndUpdate(req.params.cardId,
-    { $pull: { likes: req.user._id }, new: true, runValidators: true })
+    { $pull: { likes: req.user._id } },
+    { new: true, runValidators: true })
     .orFail(new NotFoundError('Карточка не найдена'))
     .then((card) => {
       res.status(200).send(card);
