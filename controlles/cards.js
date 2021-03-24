@@ -33,7 +33,8 @@ module.exports.getCards = (req, res, next) => {
 
 module.exports.newCard = (req, res, next) => {
   const { name, link } = req.body;
-  CardSchema.create({ name, link, owner: req.user._id })
+  const { _id: userId } = req.user;
+  CardSchema.create({ name, link, owner: userId })
     .then((card) => res.status(200).send(card))
     .catch(() => next(new BadRequestError()));
 };
