@@ -67,7 +67,7 @@ module.exports.patchUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
   UserSchema.findByIdAndUpdate(
     req.user._id,
-    avatar,
+    { avatar },
     { new: true, runValidators: true },
   )
     .orFail(new NotFoundError())
