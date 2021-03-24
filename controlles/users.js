@@ -17,11 +17,7 @@ module.exports.getUserMe = (req, res, next) => {
   UserSchema.findById(req.user._id)
     .orFail(new NotFoundError())
     .then((user) => {
-      console.log(user);
-      if (!user) {
-        return res.status(404).send({ message: 'Нет пользователя с таким id' });
-      }
-      return res.status(200).send(user);
+      res.status(200).send(user);
     })
     .catch(next);
 };
@@ -55,26 +51,28 @@ module.exports.newUser = (req, res, next) => {
 
 module.exports.patchUserInfo = (req, res, next) => {
   const { name, about } = req.body;
-  UserSchema.findOneAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
+  UserSchema.findByIdAndUpdate(
+    req.user._id,
+    { name, about },
+    { new: true, runValidators: true },
+  )
     .orFail(new NotFoundError())
     .then((user) => {
-      if (!user) {
-        return res.status(404).send({ message: 'Нет пользователя с таким id' });
-      }
-      return res.status(200).send(user);
+      res.status(200).send(user);
     })
     .catch(next);
 };
 
 module.exports.patchUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  UserSchema.findOneAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
+  UserSchema.findByIdAndUpdate(
+    req.user._id,
+    avatar,
+    { new: true, runValidators: true },
+  )
     .orFail(new NotFoundError())
     .then((user) => {
-      if (!user) {
-        return res.status(404).send({ message: 'Нет пользователя с таким id' });
-      }
-      return res.status(200).send(user);
+      res.status(200).send(user);
     })
     .catch(next);
 };
@@ -83,7 +81,6 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   UserSchema.findUserByCredentials(email, password)
     .then((user) => {
-      console.log(user);
       const token = jwt.sign(
         { _id: user._id },
         JWT_SECRET,
