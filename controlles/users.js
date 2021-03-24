@@ -5,6 +5,8 @@ const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const ConflictError = require('../errors/ConflictError');
 
+const { JWT_SECRET } = process.env;
+
 module.exports.getUsers = (req, res, next) => {
   UserSchema.find({})
     .then((users) => res.status(200).send(users))
@@ -81,12 +83,13 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   UserSchema.findUserByCredentials(email, password)
     .then((user) => {
+      console.log(user);
       const token = jwt.sign(
         { _id: user._id },
-        'some-secret-key',
+        JWT_SECRET,
         { expiresIn: '7d' },
       );
-      res.send({ token });
+      res.send(token);
     })
     .catch(() => next(new UnauthorizedError('Неверный email или пароль')));
 };
