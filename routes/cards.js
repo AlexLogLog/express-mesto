@@ -24,8 +24,6 @@ cards.post('/cards',
   }),
   newCard);
 
-cards.get('/cards/:userId', getCardId);
-
 cards.put('/cards/:cardId/likes',
   celebrate({
     params: Joi.object().keys({

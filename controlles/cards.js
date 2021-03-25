@@ -39,15 +39,6 @@ module.exports.newCard = (req, res, next) => {
     .catch(() => next(new BadRequestError()));
 };
 
-module.exports.getCardId = (req, res, next) => {
-  CardSchema.findById(req.params.userId)
-    .orFail(new NotFoundError('Карточка не найдена'))
-    .then((card) => {
-      res.status(200).send(card);
-    })
-    .catch(next);
-};
-
 module.exports.deleteCard = (req, res, next) => {
   const { cardId } = req.params;
   CardSchema.findById(cardId)
