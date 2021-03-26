@@ -22,7 +22,7 @@ module.exports.getUserMe = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.newUser = (req, res, next) => {
+module.exports.newUser = async (req, res, next) => {
   const {
     name,
     about,
