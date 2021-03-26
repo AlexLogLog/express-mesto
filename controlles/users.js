@@ -31,22 +31,23 @@ module.exports.newUser = (req, res, next) => {
     password,
   } = req.body;
 
-  bcrypt.hash(password, 10)
-    .then((hash) => {
-      UserSchema.create({
-        name,
-        about,
-        avatar,
-        email,
-        password: hash,
-      })
-        .then((user) => res.status(200).send(user))
-        .catch((err) => {
-          if (err.name === 'MongoError' && err.code === 11000) {
-            next(new ConflictError('Пользователь с данным email уже есть'));
-          } else next(err);
-        });
-    });
+  try {
+    const hash = await bcrypt.hash(password, 10);
+    const userNew = await UserSchema.create({
+      name,
+      about,
+      avatar,
+      email,
+      password: hash,
+    })
+    return res.status(200).send({
+      name: userNew.name, about: userNew.about, avatar: userNew.avatar, email: userNew.email,
+    })
+  } catch (err) {
+    if (err.name === 'MongoError' && err.code === 11000) {
+      return next(new ConflictError('Пользователь с данным email уже есть'));
+    } else return next(err);
+  };
 };
 
 module.exports.patchUserInfo = (req, res, next) => {

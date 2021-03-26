@@ -9,6 +9,7 @@
   },
   "extends": "airbnb-base",
   "rules": {
+    "parser": "@babel/eslint-parser",
     "import/extensions": "off",
     "no-console": "off",
     "no-underscore-dangle": [
