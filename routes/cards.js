@@ -6,7 +6,6 @@ const {
   dislikeCard,
   getCards,
   newCard,
-  getCardId,
   deleteCard,
 } = require('../controlles/cards');
 
