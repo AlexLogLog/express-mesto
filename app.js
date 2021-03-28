@@ -56,8 +56,8 @@ app.use(requestLogger);
 
 app.post('/signin', celebrate(userValidate), login);
 app.post('/signup', celebrate(userValidate), newUser);
-app.use('/', auth, users);
-app.use('/', auth, cards);
+app.use('/users', auth, users);
+app.use('/cards', auth, cards);
 
 app.use(errorLogger);
 

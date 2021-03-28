@@ -9,11 +9,11 @@ const {
 
 } = require('../controlles/users');
 
-users.get('/users', getUsers);
+users.get('/', getUsers);
 
-users.get('/users/me', getUserMe);
+users.get('/me', getUserMe);
 
-users.patch('/users/me',
+users.patch('/me',
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(40),
@@ -22,7 +22,7 @@ users.patch('/users/me',
   }),
   patchUserInfo);
 
-users.patch('/users/me/avatar',
+users.patch('/me/avatar',
   celebrate({
     body: Joi.object().keys({
       avatar: Joi.string().required().custom((value, helpers) => {

@@ -9,9 +9,9 @@ const {
   deleteCard,
 } = require('../controlles/cards');
 
-cards.get('/cards', getCards);
+cards.get('/', getCards);
 
-cards.post('/cards',
+cards.post('/',
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(40),
@@ -23,7 +23,7 @@ cards.post('/cards',
   }),
   newCard);
 
-cards.put('/cards/:cardId/likes',
+cards.put('/:cardId/likes',
   celebrate({
     params: Joi.object().keys({
       cardId: Joi.string().hex().length(24),
@@ -31,7 +31,7 @@ cards.put('/cards/:cardId/likes',
   }),
   likeCard);
 
-cards.delete('/cards/:cardId/likes',
+cards.delete('/:cardId/likes',
 
   celebrate({
     params: Joi.object().keys({
@@ -39,7 +39,7 @@ cards.delete('/cards/:cardId/likes',
     }),
   }), dislikeCard);
 
-cards.delete('/cards/:cardId',
+cards.delete('/:cardId',
   celebrate({
     params: Joi.object().keys({
       cardId: Joi.string().hex().length(24),
